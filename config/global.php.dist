@@ -1,0 +1,9 @@
+<?php
+
+return [
+    'database' => [
+        'dsn' => 'mysql:host=127.0.0.1;dbname=mt4_contatos_avaliacao',
+        'username' => '',
+        'password' => '',
+    ]
+];
