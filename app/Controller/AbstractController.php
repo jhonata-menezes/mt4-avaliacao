@@ -27,5 +27,23 @@ abstract class AbstractController
         $this->request = $request;
     }
 
+    public function validate(array $data) {
+        // verifica se existe os indices
+        if (empty($data['nome'] || !isset($data['input']))) {
+            return false;
+        }
+
+        // valida email e telefone
+        foreach ($data['input'] as $item) {
+            if(!empty($item['email']) && !preg_match('#^[\d\w]+\@\w+\.\w+(\.\w+)?$#i', $item['email'])) {
+                return false;
+            }
+            if(!empty($item['telefone']) && !preg_match('#^\d{10,11}$#', $item['telefone'])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     abstract function run();
 }

@@ -28,7 +28,9 @@ abstract class AbstractModel
 
     public function __construct()
     {
-        $config = require __DIR__ . '/../../config/global.php';
+        if (!$this->connection instanceof \PDO) {
+            $config = require __DIR__ . '/../../config/global.php';
+        }
         $this->config = $config['database'];
         $this->connection = new \PDO($this->config['dsn'], $this->config['username'], $this->config['password']);
     }
@@ -37,7 +39,7 @@ abstract class AbstractModel
     {
         $prepare = $this->connection->prepare($sql);
         foreach ($params as $key => $param) {
-            $prepare->bindColumn($key, $param);
+            $prepare->bindValue($key, $param);
         }
         if (!$prepare->execute()) {
             throw new \RuntimeException($prepare->errorCode() . $prepare->errorInfo());
@@ -51,8 +53,28 @@ abstract class AbstractModel
         return $this->query($sql, [':id' => $id]);
     }
 
+    public function getByIdReferencia($id)
+    {
+        $sql = sprintf('select * from %s where contatos_id = :id', $this->table);
+        return $this->query($sql, [':id' => $id]);
+    }
+
     public function all()
     {
         return $this->query('select * from '. $this->table, []);
+    }
+
+    public function apagar($id)
+    {
+        $sql = sprintf('delete from %s where id = :id', $this->table);
+        $this->query($sql, [':id' => $id]);
+    }
+
+    /**
+     * @return \PDO
+     */
+    public function getConnection()
+    {
+        return $this->connection;
     }
 }
