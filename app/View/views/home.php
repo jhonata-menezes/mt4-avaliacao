@@ -172,7 +172,7 @@
                                     <p class="control">
                                         <input class="input" type="text" v-validate="'email'" name="email" placeholder="Email" v-model="i.email">
                                     </p>
-                                    <p class="control" v-show="i.email">
+                                    <p class="control" v-if="i.email">
                                         <span class="select">
                                           <select v-model="i.tipo" v-validate="'required'" name="emailTipo">
                                             <option value="pessoal">Pessoal</option>
@@ -185,7 +185,7 @@
                                     <p class="control">
                                         <input class="input" type="text" v-validate="'numeric|min:10|max:11'" name="telefone" placeholder="Telefone" v-model="i.telefone">
                                     </p>
-                                    <p class="control" v-show="i.telefone">
+                                    <p class="control" v-if="i.telefone">
                                         <span class="select">
                                           <select v-model="i.tipo" v-validate="'required'" name="telefoneTipo">
                                             <option value="celular">Celular</option>

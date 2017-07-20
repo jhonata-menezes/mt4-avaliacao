@@ -56,6 +56,9 @@ new Vue({
                 nome: this.nome
             };
             axios.post('/contatos/salvar', body).then(r => {
+                if (this.input.length > 1) {
+                    location.reload();
+                }
                 this.salvando = false;
                 this.getTotal();
                 this.cadastroNovo = false;
